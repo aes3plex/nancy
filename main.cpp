@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Array/Array.h"
 #include "Layers/Con2d/Con2d.h"
+#include "Layers/MaxPooling/MaxPooling.h"
 
 using namespace std;
 
@@ -14,6 +15,9 @@ int main() {
             {0, 8, 5, 1, 3, 0},
             {0, 0, 0, 0, 0, 0}
     };
+
+//    MaxPooling maxPooling(2);
+//    float ** result = maxPooling.pool(array);
 
 
 //    Con2d con2d;
