@@ -2,31 +2,39 @@
 #include "Con2d.h"
 #include "../../Array/Array.h"
 
-Con2d::Con2d() {
-    this->padding = 1;
+Con2d::Con2d(c_int padding) {
+    this->padding = padding;
 }
-
 
 // input image include padding
 void Con2d::convolution(Array image, Array kernel, Array result) {
-//    int resultIndex = 0;
-//
-//    for (int rowIndex = padding; rowIndex < image.getHeight() - padding; rowIndex++) {
-//        for (int columnIndex = padding; columnIndex < image.getWidth() - padding; columnIndex++) {
-//            int rowStartIndex = rowIndex - padding;
-//            int rowFinishIndex = rowIndex + padding;
-//            int columnStartIndex = columnIndex - padding ;
-//            int columnFinishIndex = columnIndex + padding;
-//
-//            c_float area[kernel.getHeight() * kernel.getWidth()];
-//            image.getArea(rowStartIndex, rowFinishIndex, columnStartIndex, columnFinishIndex, area);
-//            kernel.multiply(area, area);
-//            float sum = Array::sum(multiplied, KERNEL_SIZE);
-//
-//            result[resultRowIndex][resultColumnIndex] = sum;
-//
-//            resultRowIndex++;
-//        }
-//        resultColumnIndex++;
-//    }
+    c_int resultIndex = 0;
+    c_int kernelHeight = kernel.getHeight(), kernelWidth = kernel.getWidth();
+
+    // check output dimensions
+    if (result.getHeight() != image.getHeight() - 2 * padding || result.getWidth() == image.getWidth() - 2 * padding) {
+        // handle
+    }
+
+
+    for (c_int rowIndex = padding; rowIndex < image.getHeight() - padding; rowIndex++) {
+        for (c_int columnIndex = padding; columnIndex < image.getWidth() - padding; columnIndex++) {
+            c_int rowStartIndex = rowIndex - padding;
+            c_int rowFinishIndex = rowIndex + padding;
+            c_int columnStartIndex = columnIndex - padding ;
+            c_int columnFinishIndex = columnIndex + padding;
+
+            c_float areaArray[kernelHeight * kernelWidth];
+            Array area(areaArray, kernelHeight, kernelWidth);
+
+            image.getArea(rowStartIndex, rowFinishIndex, columnStartIndex, columnFinishIndex, area);
+            area.multiply(kernel, area);
+
+            c_float sum = area.sum();
+
+            result.setElement(resultIndex, sum);
+
+            resultIndex++;
+        }
+    }
 }

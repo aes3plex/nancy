@@ -7,41 +7,30 @@ using namespace std;
 
 
 int main() {
-//    float array[IMAGE_SIZE][IMAGE_SIZE] = {
-//            {0, 0, 0, 0, 0, 0},
-//            {0, 7, 8, 9, 2, 0},
-//            {0, 4, 1, 3, 1, 0},
-//            {0, 2, 4, 2, 4, 0},
-//            {0, 8, 5, 1, 3, 0},
-//            {0, 0, 0, 0, 0, 0}
-//    };
+    c_float imageArray[36] = {
+            0, 0, 0, 0, 0, 0,
+            0, 7, 8, 9, 2, 0,
+            0, 4, 1, 3, 1, 0,
+            0, 2, 4, 2, 4, 0,
+            0, 8, 5, 1, 3, 0,
+            0, 0, 0, 0, 0, 0
+    };
 
-//    MaxPooling maxPooling(2);
-//    float ** result = maxPooling.pool(array);
+    c_float kernelArray[9] = {
+            0, 0, 0,
+            0, 1, 0,
+            0, 0, 0
+    };
 
-//    Con2d con2d;
-//    float kernel[KERNEL_SIZE] = { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-//    float *kernelPtr = kernel;
-//    float *arrayPtr = &array;
-//
-//    float** convResult = con2d.convolution(array, kernelPtr);
-//    cout << convResult[0][0];
+    c_float resultArray[16] = {0};
 
-    float arr[6] = { 1, 2, 3, 4, 5, 6};
-    Array array(
-            arr,
-            2,
-            3
-    );
+    Array image(imageArray,6, 6);
+    Array kernel(kernelArray, 3, 3);
+    Array result(resultArray, 4, 4);
 
-//    c_float result[4];
-//    testArray.getArea(0, 1, 0, 1, result);
-
-//    for (float i : result) {
-//        cout << i << " ";
-//    }
-
-    array.print();
+    Con2d con2d(1);
+    con2d.convolution(image, kernel, result);
+    result.print();
 
     return 0;
 }

@@ -8,7 +8,7 @@ private:
     int padding;
 
 public:
-    Con2d();
+    Con2d(c_int padding);
     void convolution(Array image, Array kernel, Array result);
 };
 
