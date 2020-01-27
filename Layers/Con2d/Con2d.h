@@ -9,7 +9,7 @@ private:
 
 public:
     Con2d();
-    float** convolution(float image[IMAGE_SIZE + 1][IMAGE_SIZE], float *kernel);
+    void convolution(Array image, Array kernel, Array result);
 };
 
 

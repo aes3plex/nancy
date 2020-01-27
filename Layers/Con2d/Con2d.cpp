@@ -8,28 +8,25 @@ Con2d::Con2d() {
 
 
 // input image include padding
-float** Con2d::convolution(float image[IMAGE_SIZE + 1][IMAGE_SIZE], float *kernel) {
-    float** result = Array::initialize2dArray(IMAGE_SIZE - 2 * padding, IMAGE_SIZE - 2 * padding);
-    int resultRowIndex, resultColumnIndex = 0;
-
-    for (int rowIndex = padding; rowIndex < IMAGE_SIZE - padding; rowIndex++) {
-        resultRowIndex = 0;
-        for (int columnIndex = padding; columnIndex < IMAGE_SIZE - padding; columnIndex++) {
-            int rowStartIndex = rowIndex - padding;
-            int rowFinishIndex = rowIndex + padding;
-            int columnStartIndex = columnIndex - padding ;
-            int columnFinishIndex = columnIndex + padding;
-
-            float* workspace = Array::getArea(image, rowStartIndex, rowFinishIndex, columnStartIndex, columnFinishIndex);
-            float* multiplied = Array::multiply(workspace, kernel, KERNEL_SIZE);
-            float sum = Array::sum(multiplied, KERNEL_SIZE);
-
-            result[resultRowIndex][resultColumnIndex] = sum;
-
-            resultRowIndex++;
-        }
-        resultColumnIndex++;
-    }
-
-    return result;
+void Con2d::convolution(Array image, Array kernel, Array result) {
+//    int resultIndex = 0;
+//
+//    for (int rowIndex = padding; rowIndex < image.getHeight() - padding; rowIndex++) {
+//        for (int columnIndex = padding; columnIndex < image.getWidth() - padding; columnIndex++) {
+//            int rowStartIndex = rowIndex - padding;
+//            int rowFinishIndex = rowIndex + padding;
+//            int columnStartIndex = columnIndex - padding ;
+//            int columnFinishIndex = columnIndex + padding;
+//
+//            c_float area[kernel.getHeight() * kernel.getWidth()];
+//            image.getArea(rowStartIndex, rowFinishIndex, columnStartIndex, columnFinishIndex, area);
+//            kernel.multiply(area, area);
+//            float sum = Array::sum(multiplied, KERNEL_SIZE);
+//
+//            result[resultRowIndex][resultColumnIndex] = sum;
+//
+//            resultRowIndex++;
+//        }
+//        resultColumnIndex++;
+//    }
 }

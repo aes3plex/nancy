@@ -1,50 +1,118 @@
 #include "Array.h"
 #include <iostream>
 
-float Array::sum(const float* array, int size) {
-    float result = 0.0;
-    for(int i = 0; i < size; i++) {
+Array::Array(c_float *array, c_int height, c_int width) {
+    this -> array = array;
+    this -> height = height;
+    this -> width = width;
+    this -> size = width * height;
+}
+
+c_float Array::getElement(c_int i, c_int j) {
+    return array[i * width + j];
+}
+
+c_float Array::getElement(c_int i) {
+    return array[i];
+}
+
+c_int Array::getSize() {
+    return size;
+}
+
+c_int Array::getHeight() {
+    return height;
+}
+
+c_int Array::getWidth() {
+    return width;
+}
+
+c_float* Array::getArray() {
+    return array;
+}
+
+void  Array::setArray(c_float *c_array) {
+    this -> array = c_array;
+}
+
+void Array::setElement(c_int index, c_float element) {
+    array[index] = element;
+}
+
+void  Array::setHeight(c_int c_height) {
+    this -> height = c_height;
+}
+
+void  Array::setWidth(c_int c_width) {
+    this -> height = c_width;
+}
+
+void  Array::setSize(c_int c_size) {
+    this -> size = c_size;
+}
+
+c_float Array::sum() {
+    c_float result = 0.0;
+
+    for(c_int i = 0; i < size; i++) {
         result += array[i];
     }
 
     return result;
 }
 
-float* Array::multiply(float* first, float* second, int size) {
-    auto* result = new float[size];
+c_float Array::sum(c_int startIndex, c_int stopIndex) {
+    c_float result = 0.0;
 
-    for (int i = 0; i < size; i++) {
-        result[i] = first[i] * second[i];
+    for(c_int i = startIndex; i < stopIndex; i++) {
+        result += array[i];
     }
 
     return result;
 }
 
-float* Array::getArea(
-        float array[IMAGE_SIZE][IMAGE_SIZE],
-        int rowStartIndex,
-        int rowFinishIndex,
-        int columnStartIndex,
-        int columnFinishIndex
-) {
-    auto* result = new float[KERNEL_SIZE];
-    int resultIndex = 0;
+void Array::multiply(Array multiplier, Array result) {
+    if (size != multiplier.getSize() || size != result.getSize()) {
+        // handle
+    }
 
-    for (int rowIndex = rowStartIndex; rowIndex <= rowFinishIndex; rowIndex++) {
-        for (int columnIndex = columnStartIndex; columnIndex <= columnFinishIndex; columnIndex++) {
-            result[resultIndex] = array[rowIndex][columnIndex];
+    for (c_int i = 0; i < size; i++) {
+        result.setElement(i, getElement(i) * multiplier.getElement(i));
+    }
+}
+
+void Array::getArea(
+        c_int rowStartIndex,
+        c_int rowFinishIndex,
+        c_int columnStartIndex,
+        c_int columnFinishIndex,
+        Array result
+) {
+    c_int resultIndex = 0;
+
+    for (c_int rowIndex = rowStartIndex; rowIndex <= rowFinishIndex; rowIndex++) {
+        for (c_int columnIndex = columnStartIndex; columnIndex <= columnFinishIndex; columnIndex++) {
+            result.setElement(resultIndex, getElement(rowIndex, columnIndex));
+
             resultIndex++;
         }
     }
-
-    return result;
 }
 
-float** Array::initialize2dArray(int rows, int columns) {
-    auto** array = new float*[rows];
-    for(int i = 0; i < rows; ++i)
-        array[i] = new float[columns];
+void Array::print() {
+    std::cout << "array: [ ";
+    for (c_int i = 0; i < size; i++) {
+        std::cout << array[i] << " ";
+    }
+    std::cout << "]";
 
-    return array;
+    std::cout << std::endl << "size: " << size;
+    std::cout << std::endl << "height: " << height;
+    std::cout << std::endl << "width: " << width;
 }
+
+
+
+
 
