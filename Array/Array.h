@@ -38,6 +38,7 @@ public:
             Array result
     );
 
+    c_float max();
     void print();
 };
 

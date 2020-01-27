@@ -100,6 +100,17 @@ void Array::getArea(
     }
 }
 
+c_float Array::max() {
+    c_float max = array[0];
+    for (c_int i = 1; i < size; i++) {
+        if (array[i] > max) {
+            max = array[i];
+        }
+    }
+
+    return max;
+}
+
 void Array::print() {
     std::cout << "array: [ ";
     for (c_int i = 0; i < size; i++) {

@@ -17,20 +17,27 @@ int main() {
     };
 
     c_float kernelArray[9] = {
-            0, 0, 0,
+            1, 0, 0,
             0, 1, 0,
-            0, 0, 0
+            0, 0, 1
     };
 
-    c_float resultArray[16] = {0};
+    c_float resultArray[16];
+    c_float poolResultArray[4] = {0};
 
     Array image(imageArray,6, 6);
     Array kernel(kernelArray, 3, 3);
     Array result(resultArray, 4, 4);
+    Array poolResult(poolResultArray, 2, 2);
 
     Con2d con2d(1);
     con2d.convolution(image, kernel, result);
+
+    MaxPooling maxPooling(2, 2);
+    maxPooling.pool(result, poolResult);
+
     result.print();
+    poolResult.print();
 
     return 0;
 }

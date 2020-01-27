@@ -5,7 +5,7 @@
 
 class Con2d {
 private:
-    int padding;
+    c_int padding;
 
 public:
     Con2d(c_int padding);

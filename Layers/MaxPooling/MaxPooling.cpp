@@ -1,30 +1,36 @@
 #include "MaxPooling.h"
-#include "../../Array/Array.h"
 
 
-MaxPooling::MaxPooling(int kernelSize) {
-    this -> kernelSize = kernelSize;
+MaxPooling::MaxPooling(c_int kernelHeight, c_int kernelWidth) {
+    this -> kernelHeight = kernelHeight;
+    this -> kernelWidth = kernelWidth;
 }
 
-float** MaxPooling::pool(float image[POOL_IMAGE_SIZE][POOL_IMAGE_SIZE]) {
-//    const int RESULT_SIZE = POOL_IMAGE_SIZE / 2;
-//    float** result = Array::initialize2dArray(RESULT_SIZE, RESULT_SIZE);
-//    int resultRowIndex, resultColumnIndex = 0;
-//
-//    for (int rowIndex = 0; rowIndex < POOL_IMAGE_SIZE; rowIndex += kernelSize) {
-//        resultRowIndex = 0;
-//        for (int columnIndex = 0; columnIndex < POOL_IMAGE_SIZE; columnIndex += kernelSize) {
-//                // todo: getArea + arrayMax functions
-//                float rowMax = std::max(image[rowIndex][columnIndex], image[rowIndex + 1][columnIndex]);
-//                float columnMax = std::max(image[rowIndex][columnIndex + 1], image[rowIndex + 1][columnIndex + 1]);
-//                float max = std::max(rowMax, columnMax);
-//
-//                result[resultRowIndex][resultColumnIndex] = max;
-//            resultRowIndex++;
-//        }
-//        resultColumnIndex++;
-//    }
+void MaxPooling::pool(Array image, Array result) {
+    c_int resultIndex = 0;
+    c_int imageHeight =  image.getHeight();
+    c_int imageWidth = image.getWidth();
 
-    return 0;
+    // check output dimensions
+    if (result.getHeight() != imageHeight / kernelHeight || result.getWidth() == imageWidth / kernelWidth) {
+        // handle
+    }
+
+    for (c_int rowIndex = 0; rowIndex < imageHeight; rowIndex += kernelHeight) {
+        for (c_int columnIndex = 0; columnIndex < imageWidth; columnIndex += kernelWidth) {
+            c_int rowStartIndex = rowIndex;
+            c_int rowFinishIndex = rowIndex + kernelHeight - 1;
+            c_int columnStartIndex = columnIndex;
+            c_int columnFinishIndex = columnIndex + kernelWidth - 1;
+
+            c_float areaArray[kernelHeight * kernelWidth];
+            Array area(areaArray, kernelHeight, kernelWidth);
+
+            image.getArea(rowStartIndex, rowFinishIndex, columnStartIndex, columnFinishIndex, area);
+            result.setElement(resultIndex, area.max());
+
+            resultIndex++;
+        }
+    }
 }
 

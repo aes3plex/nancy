@@ -16,7 +16,6 @@ void Con2d::convolution(Array image, Array kernel, Array result) {
         // handle
     }
 
-
     for (c_int rowIndex = padding; rowIndex < image.getHeight() - padding; rowIndex++) {
         for (c_int columnIndex = padding; columnIndex < image.getWidth() - padding; columnIndex++) {
             c_int rowStartIndex = rowIndex - padding;
@@ -31,7 +30,6 @@ void Con2d::convolution(Array image, Array kernel, Array result) {
             area.multiply(kernel, area);
 
             c_float sum = area.sum();
-
             result.setElement(resultIndex, sum);
 
             resultIndex++;

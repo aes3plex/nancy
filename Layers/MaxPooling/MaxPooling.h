@@ -1,16 +1,16 @@
-#include <iostream>
-#include <algorithm>
-
 #ifndef NANCY_MAXPOOLING_H
 #define NANCY_MAXPOOLING_H
-#define POOL_IMAGE_SIZE 6
+
+#include "../../Array/Array.h"
+
 
 class MaxPooling {
 private:
-    int kernelSize;
+    c_int kernelHeight;
+    c_int kernelWidth;
 public:
-    MaxPooling(int kernelSize);
-    float** pool(float image[POOL_IMAGE_SIZE][POOL_IMAGE_SIZE]);
+    MaxPooling(c_int kernelHeight, c_int kernelWidth);
+    void pool(Array image, Array result);
 };
 
 
