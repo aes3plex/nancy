@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Con2d.h"
 #include "../../Array/Array.h"
+#include "../../Activations/Activations.h"
 
 
 Con2d::Con2d(c_int padding, Array* kernels, c_int kernelsNumber) {
@@ -33,7 +34,7 @@ void Con2d::convolution(Array image, Array kernel, Array result) {
             area.multiply(kernel, area);
 
             c_float sum = area.sum();
-            result.setElement(resultIndex, sum);
+            result.setElement(resultIndex, Activations::ReLU(sum));
 
             resultIndex++;
         }
