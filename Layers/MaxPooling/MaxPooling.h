@@ -8,9 +8,11 @@ class MaxPooling {
 private:
     c_int kernelHeight;
     c_int kernelWidth;
+    c_int kernelsNumber;
 public:
-    MaxPooling(c_int kernelHeight, c_int kernelWidth);
+    MaxPooling(c_int kernelHeight, c_int kernelWidth, c_int kernelsNumber);
     void pool(Array image, Array result);
+    void getOutput(Array *convolutionFeatureMap, Array *poolFeatureMap);
 };
 
 

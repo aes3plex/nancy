@@ -110,9 +110,9 @@ c_float Array::max() {
 
     return max;
 }
-
 void Array::print() {
-    std::cout << "array: [ ";
+
+    std::cout << std::endl << "array: [ ";
     for (c_int i = 0; i < size; i++) {
         std::cout << array[i] << " ";
     }

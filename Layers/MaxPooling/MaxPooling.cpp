@@ -1,9 +1,10 @@
 #include "MaxPooling.h"
 
 
-MaxPooling::MaxPooling(c_int kernelHeight, c_int kernelWidth) {
+MaxPooling::MaxPooling(c_int kernelHeight, c_int kernelWidth, c_int kernelsNumber) {
     this -> kernelHeight = kernelHeight;
     this -> kernelWidth = kernelWidth;
+    this -> kernelsNumber = kernelsNumber;
 }
 
 void MaxPooling::pool(Array image, Array result) {
@@ -33,4 +34,11 @@ void MaxPooling::pool(Array image, Array result) {
         }
     }
 }
+
+void MaxPooling::getOutput(Array *convolutionFeatureMap, Array *poolFeatureMap) {
+    for (c_int i = 0; i < kernelsNumber; i++) {
+        pool(convolutionFeatureMap[i], poolFeatureMap[i]);
+    }
+}
+
 

@@ -16,28 +16,54 @@ int main() {
             0, 0, 0, 0, 0, 0
     };
 
-    c_float kernelArray[9] = {
+    c_float kernelArray1[9] = {
             1, 0, 0,
             0, 1, 0,
             0, 0, 1
     };
 
-    c_float resultArray[16];
-    c_float poolResultArray[4] = {0};
+    c_float kernelArray2[9] = {
+            0, 0, 0,
+            0, 1, 0,
+            0, 0, 0
+    };
+
+    c_float resultArray1[16];
+    c_float resultArray2[16];
+    c_float poolResultArray1[4];
+    c_float poolResultArray2[4];
 
     Array image(imageArray,6, 6);
-    Array kernel(kernelArray, 3, 3);
-    Array result(resultArray, 4, 4);
-    Array poolResult(poolResultArray, 2, 2);
 
-    Con2d con2d(1);
-    con2d.convolution(image, kernel, result);
+    Array kernel1(kernelArray1, 3, 3);
+    Array kernel2(kernelArray2, 3, 3);
 
-    MaxPooling maxPooling(2, 2);
-    maxPooling.pool(result, poolResult);
+    Array kernels[2] = {
+            kernel1, kernel2
+    };
 
-    result.print();
-    poolResult.print();
+
+    Array result1(resultArray1, 4, 4);
+    Array result2(resultArray2, 4, 4);
+    Array poolResult1(poolResultArray1, 2, 2);
+    Array poolResult2(poolResultArray2, 2, 2);
+
+    Array convolutionFeatureMap[2] = {
+            result1, result2
+    };
+
+    Array poolFeatureMap[2] = {
+            poolResult1, poolResult2
+    };
+
+    Con2d con2d(1, kernels, 2);
+    con2d.getOutput(image, convolutionFeatureMap);
+
+    MaxPooling maxPooling(2, 2, 2);
+    maxPooling.getOutput(convolutionFeatureMap, poolFeatureMap);
+
+    poolFeatureMap[0].print();
+    poolFeatureMap[1].print();
 
     return 0;
 }

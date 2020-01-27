@@ -6,10 +6,13 @@
 class Con2d {
 private:
     c_int padding;
+    Array *kernels;
+    c_int kernelsNumber;
 
-public:
-    Con2d(c_int padding);
     void convolution(Array image, Array kernel, Array result);
+public:
+    Con2d(c_int padding, Array* kernels, c_int kernelsNumber);
+    void getOutput(Array image, Array *resultFeatureMap);
 };
 
 

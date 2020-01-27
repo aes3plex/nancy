@@ -2,8 +2,11 @@
 #include "Con2d.h"
 #include "../../Array/Array.h"
 
-Con2d::Con2d(c_int padding) {
-    this->padding = padding;
+
+Con2d::Con2d(c_int padding, Array* kernels, c_int kernelsNumber) {
+    this -> padding = padding;
+    this -> kernels = kernels;
+    this -> kernelsNumber = kernelsNumber;
 }
 
 // input image include padding
@@ -34,5 +37,11 @@ void Con2d::convolution(Array image, Array kernel, Array result) {
 
             resultIndex++;
         }
+    }
+}
+
+void Con2d::getOutput(Array image, Array* resultFeatureMap) {
+    for (c_int i = 0; i < kernelsNumber; i++) {
+        convolution(image, kernels[i], resultFeatureMap[i]);
     }
 }
