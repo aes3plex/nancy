@@ -3,6 +3,7 @@
 #include "Layers/Con2d/Con2d.h"
 #include "Layers/MaxPooling/MaxPooling.h"
 #include "Layers/Flatten/Flatten.h"
+#include "Layers/Dense/Dense.h"
 
 using namespace std;
 
@@ -30,7 +31,11 @@ int main() {
     };
 
     c_float biasesArray[2] = {
-            100, 100
+            0, 0
+    };
+
+    c_float denseWeightsArray[2] {
+        1, 2
     };
 
     c_float resultArray1[16];
@@ -38,22 +43,27 @@ int main() {
     c_float poolResultArray1[4];
     c_float poolResultArray2[4];
     c_float flattenResultArray[8];
+    c_float denseResultArray[2];
 
     Array image(imageArray,6, 6);
 
     Array kernel1(kernelArray1, 3, 3);
     Array kernel2(kernelArray2, 3, 3);
     Array biases(biasesArray, 1, 2);
+    Array weights(denseWeightsArray, 1, 2);
 
     Array kernels[2] = {
             kernel1, kernel2
     };
 
 
+
     Array result1(resultArray1, 4, 4);
     Array result2(resultArray2, 4, 4);
     Array poolResult1(poolResultArray1, 2, 2);
     Array poolResult2(poolResultArray2, 2, 2);
+
+
 
     Array convolutionFeatureMap[2] = {
             result1, result2
@@ -76,7 +86,14 @@ int main() {
     Array flattenResult(flattenResultArray, 1, 8);
     Flatten::flatten(poolFeatureMap, 2, 4, flattenResult);
 
+    Array denseResult(denseResultArray, 1, 2);
+    Dense dense(2, weights, biases);
+    dense.getOutput(flattenResult, denseResult);
+
     flattenResult.print();
+    weights.print();
+    biases.print();
+    denseResult.print();
 
     return 0;
 }

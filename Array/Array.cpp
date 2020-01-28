@@ -80,8 +80,9 @@ c_float Array::sum(c_int startIndex, c_int stopIndex) {
 }
 
 void Array::multiply(Array multiplier, Array result) {
+    // todo: check multiplier dimension
     if (size != multiplier.getSize() || size != result.getSize()) {
-        // handle
+        std::cout <<  "Incorrect multiplier dimension";
     }
 
     for (c_int i = 0; i < size; i++) {

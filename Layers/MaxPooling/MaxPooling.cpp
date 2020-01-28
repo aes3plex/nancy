@@ -1,3 +1,4 @@
+#include <iostream>
 #include "MaxPooling.h"
 
 
@@ -12,9 +13,9 @@ void MaxPooling::pool(Array image, Array result) {
     c_int imageHeight =  image.getHeight();
     c_int imageWidth = image.getWidth();
 
-    // check output dimensions
-    if (result.getHeight() != imageHeight / kernelHeight || result.getWidth() == imageWidth / kernelWidth) {
-        // handle
+    // todo: check output dimensions
+    if (result.getHeight() != imageHeight / kernelHeight || result.getWidth() != imageWidth / kernelWidth) {
+        std::cout << "Incorrect dimension";
     }
 
     for (c_int rowIndex = 0; rowIndex < imageHeight; rowIndex += kernelHeight) {

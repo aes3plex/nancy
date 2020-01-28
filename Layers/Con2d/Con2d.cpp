@@ -5,7 +5,7 @@
 
 
 Con2d::Con2d(c_int padding, Array* kernels, c_int kernelsNumber, Array biases) {
-    // check biases dimension
+    // todo: check biases dimension
     if (biases.getSize() != kernelsNumber) {
         std::cout << "Incorrect biases dimension";
     }
@@ -21,8 +21,8 @@ void Con2d::convolution(Array image, Array kernel, c_int biasIndex, Array result
     c_int resultIndex = 0;
     c_int kernelHeight = kernel.getHeight(), kernelWidth = kernel.getWidth();
 
-    // check output dimensions
-    if (result.getHeight() != image.getHeight() - 2 * padding || result.getWidth() == image.getWidth() - 2 * padding) {
+    // todo: check output dimensions
+    if (result.getHeight() != image.getHeight() - 2 * padding || result.getWidth() != image.getWidth() - 2 * padding) {
         std::cout <<  "Incorrect output dimension";
     }
 
