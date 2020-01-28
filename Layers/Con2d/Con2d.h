@@ -8,10 +8,11 @@ private:
     c_int padding;
     Array *kernels;
     c_int kernelsNumber;
+    Array biases;
 
-    void convolution(Array image, Array kernel, Array result);
+    void convolution(Array image, Array kernel, c_int biasIndex, Array result);
 public:
-    Con2d(c_int padding, Array* kernels, c_int kernelsNumber);
+    Con2d(c_int padding, Array* kernels, c_int kernelsNumber, Array biases);
     void getOutput(Array image, Array *resultFeatureMap);
 };
 

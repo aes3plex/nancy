@@ -12,6 +12,7 @@ private:
     c_int size;
 
 public:
+    Array();
     Array(c_float* array, c_int height, c_int width);
     c_int getSize();
     c_int getHeight();

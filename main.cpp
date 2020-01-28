@@ -28,6 +28,10 @@ int main() {
             0, 0, 0
     };
 
+    c_float biasesArray[2] = {
+            100, 100
+    };
+
     c_float resultArray1[16];
     c_float resultArray2[16];
     c_float poolResultArray1[4];
@@ -37,6 +41,7 @@ int main() {
 
     Array kernel1(kernelArray1, 3, 3);
     Array kernel2(kernelArray2, 3, 3);
+    Array biases(biasesArray, 1, 2);
 
     Array kernels[2] = {
             kernel1, kernel2
@@ -56,7 +61,7 @@ int main() {
             poolResult1, poolResult2
     };
 
-    Con2d con2d(1, kernels, 2);
+    Con2d con2d(1, kernels, 2, biases);
     con2d.getOutput(image, convolutionFeatureMap);
 
     MaxPooling maxPooling(2, 2, 2);

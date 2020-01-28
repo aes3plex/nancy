@@ -1,6 +1,13 @@
 #include "Array.h"
 #include <iostream>
 
+Array::Array() {
+    this -> array = {};
+    this -> height = 0;
+    this -> width = 0;
+    this -> size = 0;
+}
+
 Array::Array(c_float *array, c_int height, c_int width) {
     this -> array = array;
     this -> height = height;

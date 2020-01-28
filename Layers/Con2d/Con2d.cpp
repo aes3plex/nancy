@@ -4,20 +4,26 @@
 #include "../../Activations/Activations.h"
 
 
-Con2d::Con2d(c_int padding, Array* kernels, c_int kernelsNumber) {
+Con2d::Con2d(c_int padding, Array* kernels, c_int kernelsNumber, Array biases) {
+    // check biases dimension
+    if (biases.getSize() != kernelsNumber) {
+        std::cout << "Incorrect biases dimension";
+    }
+
     this -> padding = padding;
     this -> kernels = kernels;
     this -> kernelsNumber = kernelsNumber;
+    this -> biases = biases;
 }
 
 // input image include padding
-void Con2d::convolution(Array image, Array kernel, Array result) {
+void Con2d::convolution(Array image, Array kernel, c_int biasIndex, Array result) {
     c_int resultIndex = 0;
     c_int kernelHeight = kernel.getHeight(), kernelWidth = kernel.getWidth();
 
     // check output dimensions
     if (result.getHeight() != image.getHeight() - 2 * padding || result.getWidth() == image.getWidth() - 2 * padding) {
-        // handle
+        std::cout <<  "Incorrect output dimension";
     }
 
     for (c_int rowIndex = padding; rowIndex < image.getHeight() - padding; rowIndex++) {
@@ -34,7 +40,8 @@ void Con2d::convolution(Array image, Array kernel, Array result) {
             area.multiply(kernel, area);
 
             c_float sum = area.sum();
-            result.setElement(resultIndex, Activations::ReLU(sum));
+            c_float bias = biases.getElement(biasIndex);
+            result.setElement(resultIndex, Activations::ReLU(sum + bias));
 
             resultIndex++;
         }
@@ -43,6 +50,6 @@ void Con2d::convolution(Array image, Array kernel, Array result) {
 
 void Con2d::getOutput(Array image, Array* resultFeatureMap) {
     for (c_int i = 0; i < kernelsNumber; i++) {
-        convolution(image, kernels[i], resultFeatureMap[i]);
+        convolution(image, kernels[i], i, resultFeatureMap[i]);
     }
 }
