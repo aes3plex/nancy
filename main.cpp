@@ -2,6 +2,7 @@
 #include "Array/Array.h"
 #include "Layers/Con2d/Con2d.h"
 #include "Layers/MaxPooling/MaxPooling.h"
+#include "Layers/Flatten/Flatten.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ int main() {
     c_float resultArray2[16];
     c_float poolResultArray1[4];
     c_float poolResultArray2[4];
+    c_float flattenResultArray[8];
 
     Array image(imageArray,6, 6);
 
@@ -61,14 +63,20 @@ int main() {
             poolResult1, poolResult2
     };
 
+
+    // CNN
+
     Con2d con2d(1, kernels, 2, biases);
     con2d.getOutput(image, convolutionFeatureMap);
 
     MaxPooling maxPooling(2, 2, 2);
     maxPooling.getOutput(convolutionFeatureMap, poolFeatureMap);
 
-    poolFeatureMap[0].print();
-    poolFeatureMap[1].print();
+
+    Array flattenResult(flattenResultArray, 1, 8);
+    Flatten::flatten(poolFeatureMap, 2, 4, flattenResult);
+
+    flattenResult.print();
 
     return 0;
 }
