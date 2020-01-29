@@ -1,99 +1,35 @@
-#include <iostream>
 #include "Array/Array.h"
-#include "Layers/Con2d/Con2d.h"
-#include "Layers/MaxPooling/MaxPooling.h"
-#include "Layers/Flatten/Flatten.h"
-#include "Layers/Dense/Dense.h"
-
-using namespace std;
+#include "Data/data.h"
+#include "cnn.h"
 
 
 int main() {
-    c_float imageArray[36] = {
-            0, 0, 0, 0, 0, 0,
-            0, 7, 8, 9, 2, 0,
-            0, 4, 1, 3, 1, 0,
-            0, 2, 4, 2, 4, 0,
-            0, 8, 5, 1, 3, 0,
-            0, 0, 0, 0, 0, 0
-    };
-
-    c_float kernelArray1[9] = {
-            1, 0, 0,
-            0, 1, 0,
-            0, 0, 1
-    };
-
-    c_float kernelArray2[9] = {
-            0, 0, 0,
-            0, 1, 0,
-            0, 0, 0
-    };
-
-    c_float biasesArray[2] = {
-            0, 0
-    };
-
-    c_float denseWeightsArray[2] {
-        1, 2
-    };
-
-    c_float resultArray1[16];
-    c_float resultArray2[16];
-    c_float poolResultArray1[4];
-    c_float poolResultArray2[4];
-    c_float flattenResultArray[8];
-    c_float denseResultArray[2];
-
-    Array image(imageArray,6, 6);
-
-    Array kernel1(kernelArray1, 3, 3);
-    Array kernel2(kernelArray2, 3, 3);
+    // inputs
+    Array image(imageArray, 6, 6);
     Array biases(biasesArray, 1, 2);
     Array weights(denseWeightsArray, 1, 2);
-
     Array kernels[2] = {
-            kernel1, kernel2
+            Array(kernelsArray[0], 3, 3),
+            Array(kernelsArray[1], 3, 3)
     };
 
 
-
-    Array result1(resultArray1, 4, 4);
-    Array result2(resultArray2, 4, 4);
-    Array poolResult1(poolResultArray1, 2, 2);
-    Array poolResult2(poolResultArray2, 2, 2);
-
-
-
-    Array convolutionFeatureMap[2] = {
-            result1, result2
+    // results
+    Array convolutionResult[2] = {
+            Array(convolutionResultsArray[0], 4, 4),
+            Array(convolutionResultsArray[1], 4, 4),
     };
-
-    Array poolFeatureMap[2] = {
-            poolResult1, poolResult2
+    Array poolResult[2] = {
+            Array(poolResultsArray[0], 2, 2),
+            Array(poolResultsArray[1], 2, 2)
     };
+    Array flattenResult(flattenResultArray, 1, 8);
+    Array denseResult(denseResultArray, 1, 2);
 
 
     // CNN
-
-    Con2d con2d(1, kernels, 2, biases);
-    con2d.getOutput(image, convolutionFeatureMap);
-
-    MaxPooling maxPooling(2, 2, 2);
-    maxPooling.getOutput(convolutionFeatureMap, poolFeatureMap);
-
-
-    Array flattenResult(flattenResultArray, 1, 8);
-    Flatten::flatten(poolFeatureMap, 2, 4, flattenResult);
-
-    Array denseResult(denseResultArray, 1, 2);
-    Dense dense(2, weights, biases);
-    dense.getOutput(flattenResult, denseResult);
-
-    flattenResult.print();
-    weights.print();
-    biases.print();
-    denseResult.print();
+    c_float output[2];
+    cnn(image, kernels, biases, weights, convolutionResult, poolResult, flattenResult, denseResult, output);
 
     return 0;
 }
