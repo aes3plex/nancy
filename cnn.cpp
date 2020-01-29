@@ -1,4 +1,5 @@
 #include "cnn.h"
+#include "Data/constants.h"
 
 
 void cnn(
@@ -12,15 +13,15 @@ void cnn(
         Array denseResult,
         c_float *output) {
 
-    Con2d con2d(1, kernels, 2, biases);
+    Con2d con2d(IMAGE_PADDING, kernels, FEATURES_MAPS_NUMBER, biases);
     con2d.getOutput(image, convolutionResult);
 
-    MaxPooling maxPooling(2, 2, 2);
+    MaxPooling maxPooling(POOL_KERNEL_HEIGHT, POOL_KERNEL_WIDTH, FEATURES_MAPS_NUMBER);
     maxPooling.getOutput(convolutionResult, poolResult);
 
-    Flatten::flatten(poolResult, 2, 4, flattenResult);
+    Flatten::flatten(poolResult, FEATURES_MAPS_NUMBER, POOL_KERNEL_HEIGHT * POOL_KERNEL_WIDTH, flattenResult);
 
-    Dense dense(2, weights, biases);
+    Dense dense(DENSE_SIZE, weights, biases);
     dense.getOutput(flattenResult, denseResult);
 
     for(c_int i = 0; i < denseResult.getSize(); i++) {

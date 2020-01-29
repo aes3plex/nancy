@@ -2,10 +2,10 @@
 #define NANCY_DATA_H
 
 #include "../Array/Array.h"
+#include "constants.h"
 
-// todo: use define for dimensions
 
-c_float imageArray[36] = {
+c_float imageArray[IMAGE_HEIGHT * IMAGE_WIDTH] = {
         0, 0, 0, 0, 0, 0,
         0, 7, 8, 9, 2, 0,
         0, 4, 1, 3, 1, 0,
@@ -14,7 +14,7 @@ c_float imageArray[36] = {
         0, 0, 0, 0, 0, 0
 };
 
-c_float kernelsArray[2][9] = {
+c_float kernelsArray[FEATURES_MAPS_NUMBER][CONVOLUTION_KERNEL_HEIGHT * CONVOLUTION_KERNEL_WIDTH] = {
         {
                 1, 0, 0,
                 0, 1, 0,
@@ -28,17 +28,17 @@ c_float kernelsArray[2][9] = {
 };
 
 
-c_float biasesArray[2] = {
+c_float biasesArray[FEATURES_MAPS_NUMBER] = {
         0, 0
 };
 
-c_float denseWeightsArray[2] {
+c_float denseWeightsArray[DENSE_SIZE] {
         1, 2
 };
 
-c_float convolutionResultsArray[2][16];
-c_float poolResultsArray[2][4];
-c_float flattenResultArray[8];
-c_float denseResultArray[2];
+c_float convolutionResultsArray[FEATURES_MAPS_NUMBER][CONVOLUTION_RESULT_HEIGHT * CONVOLUTION_RESULT_WIDTH];
+c_float poolResultsArray[FEATURES_MAPS_NUMBER][POOL_RESULT_HEIGHT * POOL_RESULT_WIDTH];
+c_float flattenResultArray[FLATTEN_SIZE];
+c_float denseResultArray[DENSE_SIZE];
 
 #endif //NANCY_DATA_H

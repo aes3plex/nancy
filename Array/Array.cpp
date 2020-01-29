@@ -15,6 +15,13 @@ Array::Array(c_float *array, c_int height, c_int width) {
     this -> size = width * height;
 }
 
+Array::Array(c_float *array, c_int width) {
+    this -> array = array;
+    this -> height = 1;
+    this -> width = width;
+    this -> size = width * height;
+}
+
 c_float Array::getElement(c_int i, c_int j) {
     return array[i * width + j];
 }
