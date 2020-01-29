@@ -22,7 +22,7 @@ c_float Dense::getNeuronOutput(c_int index, Array input) {
         neuronOutput += weight * input.getElement(i);
     }
 
-    return Activations::ReLU(neuronOutput + bias);
+    return neuronOutput + bias;
 }
 
 void Dense::getOutput(Array flatten, Array result) {
@@ -37,5 +37,7 @@ void Dense::getOutput(Array flatten, Array result) {
         c_float resultElem = getNeuronOutput(resultIndex, flatten);
         result.setElement(resultIndex, resultElem);
     }
+
+    Activations::softmax(result);
 }
 

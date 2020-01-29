@@ -27,4 +27,6 @@ void cnn(
     for(c_int i = 0; i < denseResult.getSize(); i++) {
         output[i] = denseResult.getElement(i);
     }
+
+    denseResult.print();
 }

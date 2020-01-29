@@ -125,6 +125,7 @@ c_float Array::max() {
 
     return max;
 }
+
 void Array::print() {
 
     std::cout << std::endl << "array: [ ";
